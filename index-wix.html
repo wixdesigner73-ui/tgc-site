@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TGC Homepage - Wix Studio layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap">
+<style>
+/*
+  WIX STUDIO LAYOUT VERSION
+  Same content and look as index.html, rebuilt with only things Wix Studio can do natively:
+  flat colour sections, plain grids, rectangles, standard buttons. Removed: clip-path cuts,
+  skew, gradient text, blend modes, scroll/slash animations.
+
+  SITE STYLES (set once in Wix Studio > Site Design)
+  Font ........ Jost (Wix font list)
+  Colours ..... Ink #0E0A12 | Surface #18121E | Line #2D2433 | Text #F6F1F4 | Muted #AB9FAE
+                Magenta #FF3FA4 | Orange #FF8A4C | Lime #A6EF4A | Teal #40D2C8
+  Text ........ H1 96/0.95 Bold CAPS | H2 56/1 Bold CAPS | H3 24/1.2 SemiBold | Body 17/1.6 Regular
+                Label 13 Medium CAPS, letter-spacing 0.25em, Muted
+  Buttons ..... Primary: Lime fill, dark text, 0 radius | Secondary: outline Text colour | Caps, 600, 14px
+  Page width .. 1240px content, 16px side gutter on mobile, 80-120px section padding (desktop)
+
+  ELEMENT MAP (section id -> Wix Studio element)
+  #header  Header (sticky) with Menu element + Button
+  #hero    Section with Slideshow background + container (heading, text, 2 buttons)
+  #ticker  Section with Marquee strip (Magenta)
+  #news    Section > Grid (2 col) > Repeater of cards
+  #photos  Section > Gallery or 3x2 Grid of images
+  #join    Section > 2 col Grid > Text + Wix Form
+  #footer  Footer > 4 col Grid
+*/
+:root{
+  --ink:#0e0a12; --ink-2:#18121e; --line:#2d2433; --fg:#f6f1f4; --muted:#ab9fae;
+  --magenta:#ff3fa4; --orange:#ff8a4c; --lime:#a6ef4a; --teal:#40d2c8;
+  --font:"Jost","Futura","Century Gothic",system-ui,sans-serif;
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--fg);font:400 17px/1.6 var(--font)}
+a{color:inherit}
+img{max-width:100%;display:block}
+h1,h2,h3,h4,p{margin:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:16px}
+.label{font:500 13px/1 var(--font);letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.section{padding-block:96px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;padding:16px 30px;font:600 14px/1 var(--font);letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn-primary{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+.btn-primary:hover{background:var(--fg);border-color:var(--fg)}
+.btn-outline{background:transparent;color:var(--fg);border-color:var(--fg)}
+.btn-outline:hover{background:var(--fg);color:var(--ink)}
+
+/* ---------- header ---------- */
+#header{position:sticky;top:0;z-index:20;background:var(--ink);border-bottom:1px solid var(--line)}
+#header .wrap{display:flex;align-items:center;gap:24px;height:72px}
+.logo img{height:42px;width:auto}
+.nav{display:flex;align-items:center;gap:30px;margin-left:auto}
+.nav a{font:500 14px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--muted);padding-block:8px;border-bottom:2px solid transparent}
+.nav a:hover,.nav a[aria-current]{color:var(--fg);border-bottom-color:var(--magenta)}
+.nav .store{display:flex;align-items:center;gap:9px;color:var(--fg);border:1px solid var(--line);padding:10px 16px}
+.nav .store img{height:17px;width:auto}
+.nav .store:hover{border-color:var(--lime)}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--fg);padding:10px 18px;font:500 13px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+
+/* ---------- hero ---------- */
+/* Wix: Section > Slideshow background (2 images) + dark overlay layer + text container */
+#hero{position:relative;height:640px;overflow:hidden;background:var(--ink)}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .8s}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.slide.paint img{object-position:50% 40%}
+.slide.duo img{object-position:30% 40%}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,10,18,0) 30%,rgba(14,10,18,.88) 100%)}
+.hero-copy{position:absolute;left:0;right:0;bottom:56px}
+.hero-copy .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.hero h1{font:700 96px/.95 var(--font);text-transform:uppercase}
+.hero h1 span{display:block}
+.hero h1 .green{color:var(--lime)}
+.hero .who{margin-top:16px;font:500 15px/1.4 var(--font);letter-spacing:.24em;text-transform:uppercase}
+.hero .who b{font-weight:500;color:var(--magenta)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.dots{display:flex;gap:8px}
+.dots button{width:36px;height:6px;border:0;padding:0;background:rgba(246,241,244,.35);cursor:pointer}
+.dots button[aria-current="true"]{background:var(--lime)}
+
+/* ---------- ticker ---------- */
+/* Wix: Marquee strip, Magenta background, dark text, 17px Bold CAPS */
+.ticker{overflow:hidden;background:var(--magenta);color:#160a12}
+.ticker-track{display:flex;width:max-content;animation:tick 40s linear infinite}
+.ticker ul{display:flex;margin:0;padding:15px 0;list-style:none}
+.ticker li{display:flex;align-items:center;gap:26px;padding-right:26px;font:700 17px/1 var(--font);text-transform:uppercase;letter-spacing:.14em;white-space:nowrap}
+.ticker li::after{content:"/";font-weight:300;font-size:24px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- section heading ---------- */
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px;margin-bottom:48px}
+.sec-head h2{margin-top:12px;font:700 56px/1 var(--font);text-transform:uppercase}
+.more{display:inline-block;font:500 14px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding-bottom:6px;border-bottom:2px solid var(--magenta)}
+.more:hover{border-bottom-color:var(--lime)}
+
+/* ---------- news ---------- */
+/* Wix: 2-col Grid. Left = 1 feature card. Right = Repeater (3 items), image left / text right */
+.news-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:24px}
+.post{display:grid;background:var(--ink-2);color:var(--fg);text-decoration:none;min-width:0;border:1px solid var(--line)}
+.post:hover{border-color:var(--magenta)}
+.post .ph{overflow:hidden}
+.post .ph img{width:100%;height:100%;object-fit:cover}
+.post .tx{padding:22px 24px 26px;display:grid;gap:10px;align-content:center}
+.post h3{font:600 24px/1.2 var(--font)}
+.post p{color:var(--muted);font-size:16px}
+.tag{justify-self:start;font:600 12px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;padding:7px 12px;color:#140b14}
+.tag.video{background:var(--magenta)} .tag.live{background:var(--lime)} .tag.remix{background:var(--orange)}
+.post.feature .ph{aspect-ratio:4/3.3}
+.post.feature h3{font-size:34px}
+.side{display:grid;gap:24px;grid-template-rows:repeat(3,1fr)}
+.side .post{grid-template-columns:38% minmax(0,1fr)}
+.side .post .ph{min-height:150px}
+
+/* ---------- photos ---------- */
+/* Wix: Section > Grid 6 col x 1 row (desktop), 3 x 2 (tablet), 2 x 3 (mobile). Equal-size image elements, crop to fill */
+.photos{background:var(--ink-2)}
+.reel{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.reel figure{margin:0;overflow:hidden;aspect-ratio:3/4.2}
+.reel img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- sign-up ---------- */
+/* Wix: 2-col Grid. Left = label + H2 + text. Right = Wix Form in a Surface-colour container */
+.signup .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.signup h2{margin:12px 0 20px;font:700 56px/1 var(--font);text-transform:uppercase}
+.signup h2 .green{color:var(--lime)}
+.signup p{color:var(--muted);max-width:42ch}
+.form-card{padding:40px;background:var(--ink-2);border:1px solid var(--line)}
+form{display:grid;gap:18px}
+.field{display:grid;gap:8px}
+.field label{font:500 12px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select{width:100%;background:var(--ink);border:1px solid var(--line);padding:15px 14px;color:var(--fg);font:400 17px var(--font);border-radius:0}
+.field input:focus,.field select:focus{outline:none;border-color:var(--lime)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
+.check input{margin-top:4px;accent-color:var(--lime);width:18px;height:18px;flex:none}
+form .btn{width:100%;text-align:center;padding:19px}
+.err{color:var(--magenta);font-size:15px;min-height:1em}
+.thanks{text-align:center;padding-block:24px}
+.thanks h3{font:700 38px/1 var(--font);text-transform:uppercase;color:var(--lime);margin-bottom:12px}
+
+/* ---------- footer ---------- */
+/* Wix: Footer > 4 col Grid, then a divider line and a legal row */
+#footer{border-top:1px solid var(--line);padding-block:64px 32px}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:32px}
+#footer h4{margin-bottom:16px;font:500 12px/1 var(--font);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+#footer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#footer a{text-decoration:none;color:var(--fg)}
+#footer a:hover{color:var(--lime)}
+.mail{font-size:16px;word-break:break-word}
+.mail span{display:block;color:var(--muted);font-size:13px}
+.foot-logo img{height:58px;width:auto;margin-bottom:18px}
+.foot-logo p{color:var(--muted);font-size:15px;max-width:30ch}
+.legal{margin-top:48px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:13px;color:var(--muted)}
+.legal nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+.legal a{color:var(--muted)}
+.legal a:hover{color:var(--fg)}
+
+/* ---------- tablet ---------- */
+@media (max-width:1020px){
+  .nav{display:none}
+  .menu-btn{display:inline-block}
+  .nav.open{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--ink);border-bottom:1px solid var(--line);padding:8px 16px 24px}
+  .nav.open a{padding:18px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .nav.open .store{margin-top:16px;justify-content:center;padding:16px}
+  .hero h1{font-size:72px}
+  .news-grid{grid-template-columns:1fr}
+  .reel{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .signup .wrap{grid-template-columns:1fr;gap:40px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+/* ---------- mobile ---------- */
+@media (max-width:640px){
+  .section{padding-block:64px}
+  #hero{height:600px}
+  .slide.paint img{object-position:68% 30%}
+  .hero h1{font-size:52px}
+  .hero-copy .wrap{flex-direction:column;align-items:flex-start}
+  .hero .who{font-size:12px}
+  .sec-head h2,.signup h2{font-size:40px}
+  .side .post{grid-template-columns:1fr}
+  .side .post .ph{aspect-ratio:16/10;min-height:0}
+  .reel{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-card{padding:24px}
+  .row2{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER: Wix Header (sticky). Logo image + Menu element + Store button. On mobile Wix swaps in its hamburger menu automatically. -->
+<header id="header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="TGC home"><img src="img/logo.png" alt="TGC"></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#top" aria-current="page">Home</a>
+      <a href="https://www.tgcmusic.com/photos">Photos</a>
+      <a href="https://www.tgcmusic.com/videos">Videos</a>
+      <a href="https://www.tgcmusic.com/tour">Tour</a>
+      <a href="https://www.tgcmusic.com/contact">Contact</a>
+      <a class="store" href="https://www.tgcmusic.com/store"><img src="img/dragonfly.png" alt="">Store</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO: Section, height 640px. Background = Slideshow (hero-paint.jpg, hero-duo.jpg, autoplay 7s, fade). Add a dark gradient overlay, then the text container pinned bottom. -->
+  <section class="hero" id="hero" aria-label="The Green Children">
+    <div class="slide paint on"><img src="img/hero-paint.jpg" alt="Marlow Bevan and Milla Alice in a paint-splashed double portrait"></div>
+    <div class="slide duo"><img src="img/hero-duo.jpg" alt="Marlow Bevan and Milla Alice under an umbrella in a forest"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <div class="wrap">
+        <div>
+          <h1><span>The Green</span><span class="green">Children</span></h1>
+          <p class="who"><b>Milla Alice</b> &amp; <b>Marlow Bevan</b></p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://open.spotify.com/artist/0TKIN6ssV2jhUlRm3r7U4z">Listen on Spotify</a>
+            <a class="btn btn-outline" href="https://m.youtube.com/TGCMusic">Watch SOPHIE</a>
+          </div>
+        </div>
+        <div class="dots" id="dots" role="group" aria-label="Hero photos">
+          <button aria-label="Paint portrait" aria-current="true"></button>
+          <button aria-label="Forest portrait" aria-current="false"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER: Marquee strip, Magenta. 5 text items separated by "/" -->
+  <div class="ticker" aria-label="Releases">
+    <div class="ticker-track">
+      <ul><li>SOPHIE · Visualizer</li><li>Echo · Lyric video</li><li>Bad Side</li><li>Dreamers · Embody Remix</li><li>Tour 2026 · Dates TBA</li></ul>
+      <ul aria-hidden="true"><li>SOPHIE · Visualizer</li><li>Echo · Lyric video</li><li>Bad Side</li><li>Dreamers · Embody Remix</li><li>Tour 2026 · Dates TBA</li></ul>
+    </div>
+  </div>
+
+  <!-- NEWS: Section (Ink). Heading row = label + H2 + text link. Below: 2-col Grid, feature card left, Repeater of 3 cards right. -->
+  <section class="section news" id="news">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="label">Latest news</span><h2>What's new</h2></div>
+        <a class="more" href="https://www.instagram.com/thisistgc">Follow @thisistgc</a>
+      </div>
+      <div class="news-grid">
+        <a class="post feature" href="https://m.youtube.com/TGCMusic">
+          <div class="ph"><img src="img/milla-sparkle.jpg" alt="Milla Alice in a sparkling silver top"></div>
+          <div class="tx">
+            <span class="tag video">Video</span>
+            <h3>The SOPHIE visualizer is out now</h3>
+            <p>Watch the new visualizer on our YouTube channel, then add SOPHIE to your playlists.</p>
+          </div>
+        </a>
+        <div class="side">
+          <a class="post" href="https://www.tiktok.com/@milla_alice">
+            <div class="ph"><img src="img/dreamers.jpg" alt="Milla Alice in a teal shawl under a willow tree"></div>
+            <div class="tx"><span class="tag remix">Remix</span><h3>Dreamers (Embody Remix)</h3><p>Hear the remix on TikTok.</p></div>
+          </a>
+          <a class="post" href="https://www.tgcmusic.com/tour">
+            <div class="ph"><img src="img/live-festival.jpg" alt="TGC playing an outdoor festival stage"></div>
+            <div class="tx"><span class="tag live">Live</span><h3>Tour 2026</h3><p>Dates to be announced. Sign up below to hear first.</p></div>
+          </a>
+          <a class="post" href="https://m.youtube.com/TGCMusic">
+            <div class="ph"><img src="img/live-milla.jpg" alt="Milla Alice singing on stage in orange light"></div>
+            <div class="tx"><span class="tag video">Video</span><h3>Echo, the lyric video</h3><p>Plus Bad Side, on YouTube.</p></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTOS: Section (Surface colour). Same heading row. Then Grid of 6 equal images. -->
+  <section class="section photos" id="photos">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="label">Photos</span><h2>Through the lens</h2></div>
+        <a class="more" href="https://www.tgcmusic.com/photos">See the gallery</a>
+      </div>
+      <div class="reel">
+        <figure><img src="img/milla-dress.jpg" alt="Milla Alice in a flowing peach gown" loading="lazy"></figure>
+        <figure><img src="img/live-marlow.jpg" alt="Marlow Bevan playing guitar under blue stage lights" loading="lazy"></figure>
+        <figure><img src="img/milla-desert.jpg" alt="Milla Alice in the desert with braided hair" loading="lazy"></figure>
+        <figure><img src="img/duo-forest.jpg" alt="The Green Children seated together" loading="lazy"></figure>
+        <figure><img src="img/live-milla-2.jpg" alt="Milla Alice performing live" loading="lazy"></figure>
+        <figure><img src="img/duo-bw.jpg" alt="Black and white portrait of Marlow and Milla" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGN-UP: Section (Ink). 2-col Grid. Left = text. Right = Wix Form (First name, Country dropdown, Email, consent checkbox, Submit) in a Surface container. Connect the form to Wix Contacts. -->
+  <section class="section signup" id="join">
+    <div class="wrap">
+      <div>
+        <span class="label">TGC fan sign-up</span>
+        <h2>Join the <span class="green">Green Children</span></h2>
+        <p>New music, videos and tour dates go to the list first. One email when there's news, nothing else.</p>
+      </div>
+      <div class="form-card">
+        <form id="signup" novalidate>
+          <div class="row2">
+            <div class="field"><label for="fname">First name</label><input id="fname" name="fname" autocomplete="given-name"></div>
+            <div class="field"><label for="country">Country</label>
+              <select id="country" name="country"><option value="">Choose…</option><option>United Kingdom</option><option>Norway</option><option>United States</option><option>Australia</option><option>Other</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+          <label class="check" for="consent"><input type="checkbox" id="consent" required>I'd like to receive emails from TGC. I can unsubscribe at any time.</label>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-primary" type="submit">Join the list</button>
+        </form>
+        <div class="thanks" id="thanks" hidden>
+          <h3>You're in</h3>
+          <p>Thanks for submitting! Watch your inbox for the next drop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER: Wix Footer. 4-col Grid, divider, legal row. -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="img/logo.png" alt="TGC">
+        <p>The Green Children: Milla Alice &amp; Marlow Bevan.</p>
+      </div>
+      <div>
+        <h4>Listen &amp; follow</h4>
+        <ul>
+          <li><a href="https://open.spotify.com/artist/0TKIN6ssV2jhUlRm3r7U4z">Spotify</a></li>
+          <li><a href="https://music.apple.com/us/artist/tgc/1426611365">Apple Music</a></li>
+          <li><a href="https://m.youtube.com/TGCMusic">YouTube</a></li>
+          <li><a href="http://instagram.com/thisistgc">Instagram</a></li>
+          <li><a href="https://www.facebook.com/thisistgc">Facebook</a></li>
+          <li><a href="https://www.tiktok.com/@milla_alice">TikTok</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li class="mail"><span>Management</span>mgmt@tgcmusic.com</li>
+          <li class="mail"><span>Press</span>renata.campos@theplayground.co.uk</li>
+          <li class="mail"><span>Orders</span>orders@tgcmusic.com</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Also visit</h4>
+        <ul>
+          <li><a href="http://www.millaalice.com/">MillaAlice.com</a></li>
+          <li><a href="http://www.marlowbevan.com/">MarlowBevan.com</a></li>
+          <li><a href="https://www.tgcmusic.com/store">TGC Store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Illuminated City · TGC Music · The Green Children</span>
+      <nav aria-label="Legal">
+        <a href="https://app.termly.io/document/privacy-policy/6eefdef3-f7d0-4cb4-ae12-9413ff8a6da3">Privacy Policy</a>
+        <a href="https://app.termly.io/document/terms-of-use-for-ecommerce/f8103b23-07cf-4a85-882c-90371dbd4ddb">Terms &amp; Conditions</a>
+        <a href="https://www.tgcmusic.com/shipping">Shipping</a>
+        <a href="https://app.termly.io/document/return-policy/7561313c-35bd-4b3d-ae99-8a99f2108896">Returns</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Hero: simple fade between the two photos (Wix: Slideshow autoplay). */
+(function(){
+  const slides=[...document.querySelectorAll('#hero .slide')], dots=[...document.querySelectorAll('#dots button')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur=0, timer;
+  function go(n){
+    slides[cur].classList.remove('on'); slides[n].classList.add('on');
+    dots.forEach((d,i)=>d.setAttribute('aria-current',i===n));
+    cur=n;
+  }
+  function auto(){clearInterval(timer); if(!reduce) timer=setInterval(()=>go((cur+1)%slides.length),7000)}
+  dots.forEach((d,i)=>d.addEventListener('click',()=>{go(i);auto()}));
+  auto();
+})();
+
+/* Mobile menu (Wix: built-in hamburger menu). */
+(function(){
+  const b=document.getElementById('menuBtn'), n=document.getElementById('nav');
+  b.addEventListener('click',()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu'});
+  n.addEventListener('click',e=>{if(e.target.closest('a')){n.classList.remove('open');b.setAttribute('aria-expanded',false);b.textContent='Menu'}});
+})();
+
+/* Sign-up (preview only: in Wix this connects to Wix Forms / Contacts) */
+document.getElementById('signup').addEventListener('submit',e=>{
+  e.preventDefault();
+  const email=document.getElementById('email'), consent=document.getElementById('consent'), err=document.getElementById('err');
+  if(!email.value || !email.checkValidity()){err.textContent='Enter an email address like name@example.com.';email.focus();return;}
+  if(!consent.checked){err.textContent='Tick the box so we can email you.';return;}
+  err.textContent='';
+  e.target.hidden=true;
+  document.getElementById('thanks').hidden=false;
+});
+</script>
+</body>
+</html>

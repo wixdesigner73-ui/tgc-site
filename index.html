@@ -1,0 +1,448 @@
+<title>TGC Homepage Draft</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap">
+<style>
+/* Layout: dark stage with the logo's diagonal slash cut repeated as the system: sliced headings, cut-corner cards, slash-wipe hero transitions. Their own paint splashes bleed in around the edges. */
+:root{
+  --ink:#0e0a12;          /* violet-black stage */
+  --ink-2:#18121e;        /* raised surface */
+  --line:#2d2433;
+  --fg:#f6f1f4;
+  --muted:#ab9fae;
+  --magenta:#ff3fa4;      /* pulled from the paint-splash hero */
+  --tang:#ff8a4c;
+  --lime:#a6ef4a;
+  --teal:#40d2c8;
+  --paint:linear-gradient(100deg,var(--lime),var(--teal) 30%,var(--magenta) 62%,var(--tang));
+  --font:"Jost","Futura","Century Gothic","Avenir Next",system-ui,sans-serif;
+  --slash:62deg;          /* the angle of the cuts in the TGC logo */
+  --gut-l:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  --max:1240px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--fg);font:400 17px/1.6 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{position:relative;max-width:var(--max);margin-inline:auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.label{font:500 13px/1 var(--font);letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+
+/* Sliced type: the logo's slash cut through display text. The gaps are painted with the text's own colour stops so any text colour works. */
+.cut{
+  --c:var(--fg);
+  background:linear-gradient(var(--slash) ,var(--c) 0 31%,transparent 31% 32.4%,var(--c) 32.4% 71%,transparent 71% 72.4%,var(--c) 72.4%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ---------- header ---------- */
+/* Transparent over the hero; picks up a blurred ground once the page scrolls past it. */
+.site-head{position:fixed;top:0;left:0;right:0;z-index:30;padding-top:env(safe-area-inset-top,0px);background:transparent;border-bottom:1px solid transparent;transition:background .4s,border-color .4s,backdrop-filter .4s}
+.site-head:not(.solid) .nav a:not(.store){color:var(--fg);text-shadow:0 1px 14px color-mix(in srgb,var(--ink) 70%,transparent)}
+.site-head:not(.solid) .nav .store,.site-head:not(.solid) .menu-btn{border-color:color-mix(in srgb,var(--fg) 45%,transparent);background:color-mix(in srgb,var(--ink) 25%,transparent)}
+.site-head.solid{background:color-mix(in srgb,var(--ink) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:color-mix(in srgb,var(--line) 70%,transparent)}
+.site-head .wrap{display:flex;align-items:center;gap:24px;height:70px}
+.logo img{height:42px;width:auto}
+.nav{display:flex;gap:30px;margin-left:auto;align-items:center}
+.nav a{position:relative;font:500 14px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s;padding-block:8px}
+.nav a:not(.store)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--paint);transform:scaleX(0) skewX(-28deg);transform-origin:left;transition:transform .35s}
+.nav a:hover,.nav a[aria-current]{color:var(--fg)}
+.nav a:hover::after,.nav a[aria-current]::after{transform:scaleX(1) skewX(-28deg)}
+.nav .store{display:flex;align-items:center;gap:9px;color:var(--fg);border:1px solid var(--line);padding:10px 16px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.nav .store img{height:17px;width:auto}
+.nav .store:hover{border-color:var(--lime);background:color-mix(in srgb,var(--lime) 10%,transparent)}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--fg);padding:10px 18px;font:500 13px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;cursor:pointer;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+
+/* ---------- hero: two photos, slash-wipe transition ---------- */
+.hero{position:relative;isolation:isolate;height:clamp(560px,86vh,860px);overflow:hidden;background:var(--ink)}
+.slide{position:absolute;inset:0;opacity:0}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 40%)}
+.slide.paint img{filter:contrast(1.14) saturate(1.3) brightness(.94)}
+.slide.duo img{--pos:30% 40%;filter:contrast(1.12) saturate(1.18) brightness(1.06)}
+.slide.duo::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(40% 50% at 32% 45%,color-mix(in srgb,var(--magenta) 22%,transparent),transparent 70%),radial-gradient(45% 60% at 90% 15%,color-mix(in srgb,var(--teal) 22%,transparent),transparent 70%);mix-blend-mode:screen}
+.slide.on{opacity:1;z-index:1}
+.slide.on img{animation:drift 9s ease-out both}
+.slide.enter{opacity:1;z-index:2;animation:wipe 1.25s cubic-bezier(.7,0,.2,1) both}
+.slash-bar{position:absolute;z-index:3;top:-10%;bottom:-10%;width:14vw;left:-30vw;background:var(--paint);transform:skewX(-28deg);opacity:0;mix-blend-mode:screen;pointer-events:none}
+.hero.sweeping .slash-bar{animation:bar 1.25s cubic-bezier(.7,0,.2,1) both}
+@keyframes wipe{from{clip-path:polygon(0 0,0 0,-40% 100%,0 100%)}to{clip-path:polygon(0 0,140% 0,100% 100%,0 100%)}}
+@keyframes bar{0%{left:-30vw;opacity:.9}100%{left:130vw;opacity:.9}}
+@keyframes drift{from{transform:scale(1.1)}to{transform:scale(1.01)}}
+.hero-shade{position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--ink) 62%,transparent),transparent 20%,transparent 50%,color-mix(in srgb,var(--ink) 80%,transparent) 82%,var(--ink)),radial-gradient(120% 90% at 50% 40%,transparent 55%,color-mix(in srgb,var(--ink) 55%,transparent))}
+.hero .splash{position:absolute;z-index:5;pointer-events:none;mix-blend-mode:screen}
+.hero .s1{width:min(46vw,560px);right:-8vw;bottom:-6vw;opacity:.75;animation:float 12s ease-in-out infinite}
+.hero .s2{width:min(30vw,360px);left:-6vw;top:8%;opacity:.55;animation:float 14s ease-in-out infinite reverse}
+@keyframes float{50%{transform:translate(1.5vw,-1.2vw) rotate(4deg)}}
+.hero-copy{position:absolute;z-index:6;left:0;right:0;bottom:clamp(28px,6vh,64px)}
+.hero-copy .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px}
+.hero h1{margin:0;font:700 clamp(54px,10vw,140px)/.88 var(--font);letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.hero h1 span{display:block}
+.hero h1 .cut.green{--c:var(--lime)}
+.hero .who{margin:16px 0 0;font:500 15px/1.4 var(--font);letter-spacing:.24em;text-transform:uppercase}
+.hero .who b{font-weight:500;color:var(--magenta)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;font:600 14px/1 var(--font);letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);transition:transform .25s,background-position .6s}
+.btn:hover{transform:translateY(-2px)}
+.btn-paint{background:var(--paint);background-size:200% 100%;color:#140b14}
+.btn-paint:hover{background-position:100% 0}
+.btn-ghost{background:color-mix(in srgb,var(--fg) 14%,transparent);color:var(--fg);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:color-mix(in srgb,var(--fg) 24%,transparent)}
+.dots{display:flex;gap:8px}
+.dots button{width:34px;height:6px;border:0;padding:0;background:color-mix(in srgb,var(--fg) 30%,transparent);transform:skewX(-28deg);cursor:pointer;transition:background .3s,width .3s}
+.dots button[aria-current="true"]{background:var(--lime);width:54px}
+
+/* ---------- ticker ---------- */
+.ticker{overflow:hidden;background:var(--magenta);color:#160a12;transform:skewY(-1.4deg);margin-block:-10px 0;position:relative;z-index:7}
+.ticker-track{display:flex;width:max-content;animation:tick 40s linear infinite}
+.ticker ul{display:flex;margin:0;padding:15px 0;list-style:none}
+.ticker li{font:700 17px/1 var(--font);text-transform:uppercase;letter-spacing:.14em;white-space:nowrap;display:flex;align-items:center;gap:26px;padding-right:26px}
+.ticker li::after{content:"/";font-weight:300;font-size:24px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+.band{position:relative;padding-block:clamp(72px,10vw,128px);overflow:hidden}
+.band .splash{position:absolute;pointer-events:none;mix-blend-mode:screen;z-index:0}
+.band > .wrap{z-index:1}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 32px;margin-bottom:clamp(30px,4vw,52px)}
+.sec-head h2{margin:10px 0 0;font:700 clamp(42px,6.4vw,84px)/.92 var(--font);text-transform:uppercase;text-wrap:balance}
+.more{font:500 14px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--fg);display:inline-flex;align-items:center;gap:12px}
+.more::after{content:"";width:28px;height:2px;background:var(--magenta);transform:skewX(-28deg);transition:width .3s}
+.more:hover::after{width:44px}
+
+/* news */
+.news .s-a{width:520px;right:-180px;top:-60px;opacity:.5}
+.news-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:20px}
+.post{position:relative;display:grid;text-decoration:none;color:var(--fg);background:var(--ink-2);min-width:0;clip-path:polygon(0 0,calc(100% - 34px) 0,100% 34px,100% 100%,0 100%)}
+.post .ph{overflow:hidden;position:relative}
+.post .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .8s;filter:saturate(1.08) contrast(1.05)}
+.post:hover .ph img{transform:scale(1.05);filter:saturate(1.35) contrast(1.1)}
+.post .ph::after{content:"";position:absolute;top:0;bottom:0;width:30%;left:-40%;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--fg) 30%,transparent),transparent);transform:skewX(-28deg)}
+.post:hover .ph::after{left:120%;transition:left .9s ease}
+.post .tx{padding:22px 24px 26px;display:grid;gap:10px;align-content:start}
+.post h3{margin:0;font:600 23px/1.15 var(--font);text-wrap:balance}
+.post p{margin:0;color:var(--muted);font-size:16px}
+.tag{justify-self:start;font:600 12px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;padding:7px 14px;color:#140b14;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.tag.video{background:var(--magenta)}.tag.live{background:var(--lime)}.tag.remix{background:var(--tang)}
+.post.feature .ph{aspect-ratio:4/3.3}
+.post.feature h3{font-size:clamp(28px,3vw,38px)}
+.side{display:grid;gap:20px;grid-template-rows:repeat(3,1fr)}
+.side .post{grid-template-columns:38% minmax(0,1fr);clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%)}
+.side .post .ph{min-height:150px}
+.side .post .tx{align-content:center}
+
+/* photos */
+.photos .s-b{width:620px;left:-220px;bottom:-140px;opacity:.55}
+.photos .s-c{width:380px;right:-90px;top:40px;opacity:.45}
+.reel{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.reel figure{margin:0;overflow:hidden;aspect-ratio:3/4.4;position:relative;clip-path:polygon(18% 0,100% 0,82% 100%,0 100%)}
+.reel figure + figure{margin-left:-7%}
+.reel img{width:100%;height:100%;object-fit:cover;transition:filter .7s,transform .7s;filter:grayscale(.25) contrast(1.05)}
+.reel figure:hover img{filter:saturate(1.4) contrast(1.1);transform:scale(1.06)}
+
+/* sign-up */
+.signup{background:var(--ink-2)}
+.signup .s-d{width:640px;right:-200px;bottom:-200px;opacity:.6}
+.signup .s-e{width:300px;left:30%;top:-70px;opacity:.5}
+.signup .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,80px);align-items:center}
+.signup h2{margin:12px 0 20px;font:700 clamp(44px,6.6vw,88px)/.92 var(--font);text-transform:uppercase}
+.signup h2 .cut{--c:var(--lime)}
+.signup p{color:var(--muted);max-width:42ch;margin:0}
+.form-card{position:relative;padding:clamp(26px,4vw,42px);background:var(--ink);clip-path:polygon(0 0,calc(100% - 40px) 0,100% 40px,100% 100%,40px 100%,0 calc(100% - 40px))}
+form{display:grid;gap:18px}
+.field{display:grid;gap:8px}
+.field label{font:500 12px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select{width:100%;background:var(--ink-2);border:0;border-bottom:2px solid var(--line);padding:15px 14px;color:var(--fg);font:400 17px var(--font);border-radius:0}
+.field input:focus,.field select:focus{outline:none;border-bottom-color:var(--lime);background:color-mix(in srgb,var(--lime) 6%,var(--ink-2))}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
+.check input{margin-top:4px;accent-color:var(--lime);width:18px;height:18px;flex:none}
+form .btn{width:100%;padding:19px}
+.err{color:var(--magenta);font-size:15px;margin:0;min-height:1em}
+.thanks{text-align:center;padding-block:24px}
+.thanks h3{font:700 38px/1 var(--font);text-transform:uppercase;margin:0 0 12px}
+.thanks p{margin:0 auto}
+
+/* footer */
+.foot{position:relative;border-top:1px solid var(--line);padding-block:60px 32px;overflow:hidden}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:32px}
+.foot h4{margin:0 0 16px;font:500 12px/1 var(--font);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.foot a{text-decoration:none;color:var(--fg)}
+.foot a:hover{color:var(--lime)}
+.foot .mail{font-size:16px;word-break:break-word}
+.foot .mail span{display:block;color:var(--muted);font-size:13px;letter-spacing:.06em}
+.foot-logo img{height:58px;width:auto;margin-bottom:18px}
+.foot-logo p{color:var(--muted);font-size:15px;margin:0;max-width:30ch}
+.legal{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font:400 13px/1.6 var(--font);letter-spacing:.08em;color:var(--muted)}
+.legal nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+.legal a{color:var(--muted)}
+.legal a:hover{color:var(--fg)}
+
+/* entrance: content is visible at rest; this only adds a short rise */
+.rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.rise.d2{animation-delay:.12s}.rise.d3{animation-delay:.24s}
+@keyframes rise{from{transform:translateY(18px)}}
+
+/* ---------- responsive ---------- */
+@media (max-width:1020px){
+  .nav{display:none}
+  .menu-btn{display:inline-block}
+  .nav.open{display:flex;position:fixed;inset:70px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:var(--ink);border-bottom:1px solid var(--line);padding:8px var(--gut-r) 24px var(--gut-l)}
+  .nav.open a{padding:18px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .nav.open a::after{display:none}
+  .nav.open .store{margin-top:16px;justify-content:center;padding:16px}
+  .news-grid{grid-template-columns:1fr}
+  .reel{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:14px}
+  .reel figure:nth-child(3n+1){margin-left:0}
+  .signup .wrap{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .hero{height:clamp(580px,90svh,760px)}
+  .slide.paint img{--pos:68% 30%}
+  .slide.duo img{--pos:34% 40%}
+  .hero-copy .wrap{grid-template-columns:1fr}
+  .hero .who{font-size:12px;letter-spacing:.2em}
+  .hero .s1{width:80vw;right:-30vw;bottom:auto;top:30%}
+  .btn{padding:15px 22px;font-size:13px}
+  .side .post{grid-template-columns:1fr}
+  .side .post .ph{aspect-ratio:16/10;min-height:0}
+  .reel{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;margin-right:calc(-1 * var(--gut-r));padding-right:var(--gut-r);scrollbar-width:none}
+  .reel::-webkit-scrollbar{display:none}
+  .reel figure{flex:0 0 64%;scroll-snap-align:start}
+  .reel figure + figure,.reel figure:nth-child(3n+1){margin-left:-9%}
+  .reel figure:first-child{margin-left:0}
+  .row2{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .band .splash{opacity:.35!important}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="TGC home"><img src="img/logo.png" alt="TGC"></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#top" aria-current="page">Home</a>
+      <a href="https://www.tgcmusic.com/photos">Photos</a>
+      <a href="https://www.tgcmusic.com/videos">Videos</a>
+      <a href="https://www.tgcmusic.com/tour">Tour</a>
+      <a href="https://www.tgcmusic.com/contact">Contact</a>
+      <a class="store" href="https://www.tgcmusic.com/store"><img src="img/dragonfly.png" alt="">Store</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" aria-label="The Green Children">
+    <div class="slide paint on"><img src="img/hero-paint.jpg" alt="Marlow Bevan and Milla Alice in a paint-splashed double portrait"></div>
+    <div class="slide duo"><img src="img/hero-duo.jpg" alt="Marlow Bevan and Milla Alice under an umbrella in a forest"></div>
+    <div class="slash-bar" aria-hidden="true"></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <img class="splash s1" src="img/splodges.png" alt="" aria-hidden="true">
+    <img class="splash s2" src="img/splatter.png" alt="" aria-hidden="true">
+    <div class="hero-copy">
+      <div class="wrap">
+        <div>
+          <h1 class="rise"><span class="cut">The Green</span><span class="cut green">Children</span></h1>
+          <p class="who rise d2"><b>Milla Alice</b> &amp; <b>Marlow Bevan</b></p>
+          <div class="cta-row rise d3">
+            <a class="btn btn-paint" href="https://open.spotify.com/artist/0TKIN6ssV2jhUlRm3r7U4z">Listen on Spotify</a>
+            <a class="btn btn-ghost" href="https://m.youtube.com/TGCMusic">Watch SOPHIE</a>
+          </div>
+        </div>
+        <div class="dots" id="dots" role="group" aria-label="Hero photos">
+          <button aria-label="Paint portrait" aria-current="true"></button>
+          <button aria-label="Forest portrait" aria-current="false"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-label="Releases">
+    <div class="ticker-track">
+      <ul><li>SOPHIE · Visualizer</li><li>Echo · Lyric video</li><li>Bad Side</li><li>Dreamers · Embody Remix</li><li>Tour 2026 · Dates TBA</li></ul>
+      <ul aria-hidden="true"><li>SOPHIE · Visualizer</li><li>Echo · Lyric video</li><li>Bad Side</li><li>Dreamers · Embody Remix</li><li>Tour 2026 · Dates TBA</li></ul>
+    </div>
+  </div>
+
+  <section class="band news" id="news">
+    <img class="splash s-a" src="img/splatter.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="label">Latest news</span><h2 class="cut">What's new</h2></div>
+        <a class="more" href="https://www.instagram.com/thisistgc">Follow @thisistgc</a>
+      </div>
+      <div class="news-grid">
+        <a class="post feature" href="https://m.youtube.com/TGCMusic">
+          <div class="ph"><img src="img/milla-sparkle.jpg" alt="Milla Alice in a sparkling silver top"></div>
+          <div class="tx">
+            <span class="tag video">Video</span>
+            <h3>The SOPHIE visualizer is out now</h3>
+            <p>Watch the new visualizer on our YouTube channel, then add SOPHIE to your playlists.</p>
+          </div>
+        </a>
+        <div class="side">
+          <a class="post" href="https://www.tiktok.com/@milla_alice">
+            <div class="ph"><img src="img/dreamers.jpg" alt="Milla Alice in a teal shawl under a willow tree"></div>
+            <div class="tx"><span class="tag remix">Remix</span><h3>Dreamers (Embody Remix)</h3><p>Hear the remix on TikTok.</p></div>
+          </a>
+          <a class="post" href="https://www.tgcmusic.com/tour">
+            <div class="ph"><img src="img/live-festival.jpg" alt="TGC playing an outdoor festival stage"></div>
+            <div class="tx"><span class="tag live">Live</span><h3>Tour 2026</h3><p>Dates to be announced. Sign up below to hear first.</p></div>
+          </a>
+          <a class="post" href="https://m.youtube.com/TGCMusic">
+            <div class="ph"><img src="img/live-milla.jpg" alt="Milla Alice singing on stage in orange light"></div>
+            <div class="tx"><span class="tag video">Video</span><h3>Echo, the lyric video</h3><p>Plus Bad Side, on YouTube.</p></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band photos" id="photos">
+    <img class="splash s-b" src="img/splodges.png" alt="" aria-hidden="true">
+    <img class="splash s-c" src="img/yellow.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="label">Photos</span><h2 class="cut">Through the lens</h2></div>
+        <a class="more" href="https://www.tgcmusic.com/photos">See the gallery</a>
+      </div>
+      <div class="reel">
+        <figure><img src="img/milla-dress.jpg" alt="Milla Alice in a flowing peach gown" loading="lazy"></figure>
+        <figure><img src="img/live-marlow.jpg" alt="Marlow Bevan playing guitar under blue stage lights" loading="lazy"></figure>
+        <figure><img src="img/milla-desert.jpg" alt="Milla Alice in the desert with braided hair" loading="lazy"></figure>
+        <figure><img src="img/duo-forest.jpg" alt="The Green Children seated together" loading="lazy"></figure>
+        <figure><img src="img/live-milla-2.jpg" alt="Milla Alice performing live" loading="lazy"></figure>
+        <figure><img src="img/duo-bw.jpg" alt="Black and white portrait of Marlow and Milla" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band signup" id="join">
+    <img class="splash s-d" src="img/splatter.png" alt="" aria-hidden="true">
+    <img class="splash s-e" src="img/yellow.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <div>
+        <span class="label">TGC fan sign-up</span>
+        <h2><span class="cut">Join the</span> <span class="cut">Green Children</span></h2>
+        <p>New music, videos and tour dates go to the list first. One email when there's news, nothing else.</p>
+      </div>
+      <div class="form-card">
+        <form id="signup" novalidate>
+          <div class="row2">
+            <div class="field"><label for="fname">First name</label><input id="fname" name="fname" autocomplete="given-name"></div>
+            <div class="field"><label for="country">Country</label>
+              <select id="country" name="country"><option value="">Choose…</option><option>United Kingdom</option><option>Norway</option><option>United States</option><option>Australia</option><option>Other</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+          <label class="check" for="consent"><input type="checkbox" id="consent" required>I'd like to receive emails from TGC. I can unsubscribe at any time.</label>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-paint" type="submit">Join the list</button>
+        </form>
+        <div class="thanks" id="thanks" hidden>
+          <h3 class="cut">You're in</h3>
+          <p>Thanks for submitting! Watch your inbox for the next drop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="img/logo.png" alt="TGC">
+        <p>The Green Children: Milla Alice &amp; Marlow Bevan.</p>
+      </div>
+      <div>
+        <h4>Listen &amp; follow</h4>
+        <ul>
+          <li><a href="https://open.spotify.com/artist/0TKIN6ssV2jhUlRm3r7U4z">Spotify</a></li>
+          <li><a href="https://music.apple.com/us/artist/tgc/1426611365">Apple Music</a></li>
+          <li><a href="https://m.youtube.com/TGCMusic">YouTube</a></li>
+          <li><a href="http://instagram.com/thisistgc">Instagram</a></li>
+          <li><a href="https://www.facebook.com/thisistgc">Facebook</a></li>
+          <li><a href="https://www.tiktok.com/@milla_alice">TikTok</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li class="mail"><span>Management</span>mgmt@tgcmusic.com</li>
+          <li class="mail"><span>Press</span>renata.campos@theplayground.co.uk</li>
+          <li class="mail"><span>Orders</span>orders@tgcmusic.com</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Also visit</h4>
+        <ul>
+          <li><a href="http://www.millaalice.com/">MillaAlice.com</a></li>
+          <li><a href="http://www.marlowbevan.com/">MarlowBevan.com</a></li>
+          <li><a href="https://www.tgcmusic.com/store">TGC Store</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Illuminated City · TGC Music · The Green Children</span>
+      <nav aria-label="Legal">
+        <a href="https://app.termly.io/document/privacy-policy/6eefdef3-f7d0-4cb4-ae12-9413ff8a6da3">Privacy Policy</a>
+        <a href="https://app.termly.io/document/terms-of-use-for-ecommerce/f8103b23-07cf-4a85-882c-90371dbd4ddb">Terms &amp; Conditions</a>
+        <a href="https://www.tgcmusic.com/shipping">Shipping</a>
+        <a href="https://app.termly.io/document/return-policy/7561313c-35bd-4b3d-ae99-8a99f2108896">Returns</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Hero: alternate the two photos with a diagonal slash wipe. */
+(function(){
+  const hero=document.getElementById('hero'), slides=[...hero.querySelectorAll('.slide')], dots=[...document.querySelectorAll('#dots button')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur=0, timer, busy=false;
+  function go(n){
+    if(n===cur||busy) return;
+    busy=true;
+    const prev=slides[cur], next=slides[n];
+    next.classList.add('enter');
+    hero.classList.remove('sweeping'); void hero.offsetWidth; hero.classList.add('sweeping');
+    dots.forEach((d,i)=>d.setAttribute('aria-current',i===n));
+    const done=()=>{prev.classList.remove('on');next.classList.remove('enter');next.classList.add('on');cur=n;busy=false};
+    if(reduce) done(); else next.addEventListener('animationend',done,{once:true});
+  }
+  function auto(){clearInterval(timer); if(!reduce) timer=setInterval(()=>go((cur+1)%slides.length),7000)}
+  dots.forEach((d,i)=>d.addEventListener('click',()=>{go(i);auto()}));
+  auto();
+})();
+
+/* Mobile menu */
+(function(){
+  const b=document.getElementById('menuBtn'), n=document.getElementById('nav');
+  const head=document.querySelector('.site-head'), hero=document.getElementById('hero');
+  const update=()=>head.classList.toggle('solid',n.classList.contains('open')||scrollY>hero.offsetHeight-120);
+  addEventListener('scroll',update,{passive:true}); update();
+  b.addEventListener('click',()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu';update()});
+  n.addEventListener('click',e=>{if(e.target.closest('a')){n.classList.remove('open');b.setAttribute('aria-expanded',false);b.textContent='Menu';update()}});
+})();
+
+/* Sign-up (preview only: in Wix this connects to Wix Forms / Contacts) */
+document.getElementById('signup').addEventListener('submit',e=>{
+  e.preventDefault();
+  const email=document.getElementById('email'), consent=document.getElementById('consent'), err=document.getElementById('err');
+  if(!email.value || !email.checkValidity()){err.textContent='Enter an email address like name@example.com.';email.focus();return;}
+  if(!consent.checked){err.textContent='Tick the box so we can email you.';return;}
+  err.textContent='';
+  e.target.hidden=true;
+  document.getElementById('thanks').hidden=false;
+});
+</script>
