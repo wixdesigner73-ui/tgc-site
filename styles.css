@@ -251,3 +251,103 @@ form .btn{width:100%;text-align:center;padding:19px}
 /* Alternate (Surface colour) section; form card flips to Ink so it stands out */
 .alt{background:var(--ink-2);border-top:1px solid var(--line)}
 .alt .form-card{background:var(--ink)}
+
+/* =====================================================================
+   STORE (Wix Stores: Store page, Product page, Cart page).
+   These are layout mock-ups. Wix Stores supplies the real product gallery,
+   product page, cart and checkout, so style those to match.
+   ===================================================================== */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px}
+.chip{padding:12px 20px;border:1px solid var(--line);background:transparent;color:var(--muted);font:500 13px/1 var(--font);letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+.chip:hover{border-color:var(--fg);color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--ink)}
+
+/* Wix: Store product gallery, 4 col grid, image + name + price */
+.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.product{display:grid;gap:14px;text-decoration:none;color:var(--fg);align-content:start}
+.product .ph{aspect-ratio:1/1;overflow:hidden;background:var(--ink-2);border:1px solid var(--line);position:relative}
+.product:hover .ph{border-color:var(--magenta)}
+.product .ph img{width:100%;height:100%;object-fit:cover}
+.product .ph .tag{position:absolute;top:12px;left:12px}
+.product h3{font:600 20px/1.25 var(--font)}
+.product .price{color:var(--muted);font:500 17px/1 var(--font)}
+
+.info-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:64px}
+.info-strip div{padding:28px;border:1px solid var(--line);background:var(--ink-2);display:grid;gap:10px;align-content:start}
+.info-strip h3{font:600 20px/1.2 var(--font)}
+.info-strip p{color:var(--muted);font-size:16px}
+.info-strip a{color:var(--lime)}
+
+/* Wix: Product page, 2 col Grid. Left = gallery, right = details */
+.crumbs{margin-bottom:28px;font:500 13px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.crumbs a{text-decoration:none}
+.crumbs a:hover{color:var(--fg)}
+.pdp{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start}
+.pdp-main{aspect-ratio:1/1;overflow:hidden;background:var(--ink-2);border:1px solid var(--line)}
+.pdp-main img{width:100%;height:100%;object-fit:cover}
+.thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+.thumbs button{padding:0;border:1px solid var(--line);background:var(--ink-2);aspect-ratio:1/1;overflow:hidden;cursor:pointer}
+.thumbs button[aria-current="true"]{border-color:var(--lime)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.pdp h1{margin:14px 0 12px;font:700 48px/1 var(--font);text-transform:uppercase}
+.pdp .price{font:600 28px/1 var(--font);margin-bottom:24px}
+.pdp .desc{color:var(--muted);max-width:52ch}
+.opts{display:grid;gap:18px;margin:28px 0}
+.sizes{display:flex;flex-wrap:wrap;gap:10px}
+.sizes button{min-width:52px;padding:14px 16px;border:1px solid var(--line);background:transparent;color:var(--fg);font:500 15px/1 var(--font);cursor:pointer}
+.sizes button:hover{border-color:var(--fg)}
+.sizes button[aria-pressed="true"]{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.qty{display:inline-flex;border:1px solid var(--line);width:max-content}
+.qty button{width:46px;background:transparent;border:0;color:var(--fg);font:500 20px/1 var(--font);cursor:pointer}
+.qty button:hover{background:var(--ink-2)}
+.qty output{min-width:48px;display:grid;place-items:center;font:500 17px/1 var(--font);border-inline:1px solid var(--line)}
+.buy-row{display:grid;gap:12px}
+.buy-row .btn{text-align:center;padding:19px}
+.details{margin-top:32px;border-top:1px solid var(--line)}
+.details details{border-bottom:1px solid var(--line);padding:18px 0}
+.details summary{cursor:pointer;font:500 14px/1 var(--font);letter-spacing:.2em;text-transform:uppercase}
+.details p{margin-top:12px;color:var(--muted);font-size:16px}
+.details a{color:var(--lime)}
+.note{margin-top:16px;color:var(--lime);font-size:15px;min-height:1em}
+
+/* Wix: Cart page, 2 col Grid. Left = items, right = order summary */
+.cart{display:grid;grid-template-columns:1.6fr 1fr;gap:48px;align-items:start}
+.cart-head,.cart-line{display:grid;grid-template-columns:minmax(0,3fr) 130px 100px 28px;gap:16px;align-items:center}
+.cart-head{padding-bottom:14px;border-bottom:1px solid var(--line);font:500 12px/1 var(--font);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cart-line{padding:22px 0;border-bottom:1px solid var(--line)}
+.cart-item{display:flex;gap:18px;align-items:center;min-width:0}
+.cart-item img{width:92px;height:92px;object-fit:cover;border:1px solid var(--line);flex:none}
+.cart-item h3{font:600 19px/1.25 var(--font)}
+.cart-item p{color:var(--muted);font-size:14px;margin-top:4px}
+.cart-line .total{font:500 17px/1 var(--font);text-align:right}
+.cart-line .remove{background:none;border:0;color:var(--muted);font-size:22px;line-height:1;cursor:pointer}
+.cart-line .remove:hover{color:var(--magenta)}
+.summary{padding:32px;background:var(--ink-2);border:1px solid var(--line);display:grid;gap:16px}
+.summary h2{font:700 28px/1 var(--font);text-transform:uppercase}
+.summary .row{display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:16px}
+.summary .row.grand{padding-top:16px;border-top:1px solid var(--line);color:var(--fg);font:600 20px/1 var(--font)}
+.summary .btn{text-align:center;padding:19px}
+.summary .small{color:var(--muted);font-size:14px}
+.summary .small a{color:var(--lime)}
+
+@media (max-width:1020px){
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .info-strip{grid-template-columns:1fr}
+  .pdp,.cart{grid-template-columns:1fr;gap:36px}
+}
+@media (max-width:640px){
+  .pdp h1{font-size:36px}
+  .product-grid{gap:16px}
+  .cart-head{display:none}
+  .cart-line{grid-template-columns:minmax(0,1fr) auto;row-gap:12px}
+  .cart-line .qty{grid-column:1}
+  .cart-line .total{grid-column:2;grid-row:2}
+  .cart-line .remove{grid-column:2;grid-row:1;justify-self:end}
+  .cart-item img{width:72px;height:72px}
+}
+
+.continue{margin-top:24px}
+.cart-head span:nth-child(3){text-align:right}
+
+.price s{color:var(--muted);opacity:.7;margin-right:6px}
+.product .price{color:var(--fg)}

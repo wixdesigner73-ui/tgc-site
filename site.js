@@ -20,3 +20,29 @@ document.querySelectorAll('form[data-form]').forEach(form=>{
     form.parentElement.querySelector('.thanks').hidden=false;
   });
 });
+
+/* Store: category filter */
+(function(){
+  const chips=[...document.querySelectorAll('.chip')], items=[...document.querySelectorAll('.product[data-cat]')];
+  chips.forEach(c=>c.addEventListener('click',()=>{
+    chips.forEach(x=>x.setAttribute('aria-pressed',x===c));
+    items.forEach(p=>p.hidden=c.dataset.filter!=='all'&&p.dataset.cat!==c.dataset.filter);
+  }));
+})();
+
+/* Store: product page (thumbnails, size, quantity, add to cart message) */
+(function(){
+  const main=document.getElementById('mainImg');
+  if(!main) return;
+  const thumbs=[...document.querySelectorAll('#thumbs button')];
+  thumbs.forEach(t=>t.addEventListener('click',()=>{main.src=t.dataset.src;thumbs.forEach(x=>x.setAttribute('aria-current',x===t))}));
+  const sizes=[...document.querySelectorAll('#sizes button')];
+  sizes.forEach(s=>s.addEventListener('click',()=>sizes.forEach(x=>x.setAttribute('aria-pressed',x===s))));
+  const out=document.getElementById('qtyOut');
+  document.querySelectorAll('.qty [data-step]').forEach(b=>b.addEventListener('click',()=>{out.textContent=Math.max(1,+out.textContent+ +b.dataset.step)}));
+  const add=document.getElementById('addBtn'), note=document.getElementById('addNote');
+  add.addEventListener('click',()=>{
+    const size=sizes.find(s=>s.getAttribute('aria-pressed')==='true');
+    note.textContent=size?'Added to cart (preview only).':'Choose a size first.';
+  });
+})();
