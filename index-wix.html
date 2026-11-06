@@ -15,6 +15,7 @@
 <header id="header">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="TGC home"><img src="img/logo.png" alt="TGC"></a>
+    <a class="store-m" href="store.html" aria-label="Store"><img src="img/dragonfly.png" alt="">Store</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#top" aria-current="page">Home</a>
@@ -68,7 +69,7 @@
         <a class="more" href="https://www.instagram.com/thisistgc">Follow @thisistgc</a>
       </div>
       <div class="news-grid">
-        <a class="post feature" href="https://m.youtube.com/TGCMusic">
+        <a class="post feature" href="https://m.youtube.com/TGCMusic" data-cta="Watch on YouTube">
           <div class="ph"><img src="img/milla-sparkle.jpg" alt="Milla Alice in a sparkling silver top"></div>
           <div class="tx">
             <span class="tag video">Video</span>
@@ -77,15 +78,15 @@
           </div>
         </a>
         <div class="side">
-          <a class="post" href="https://www.tiktok.com/@milla_alice">
+          <a class="post" href="https://www.tiktok.com/@milla_alice" data-cta="Listen on TikTok">
             <div class="ph"><img src="img/dreamers.jpg" alt="Milla Alice in a teal shawl under a willow tree"></div>
             <div class="tx"><span class="tag remix">Remix</span><h3>Dreamers (Embody Remix)</h3><p>Hear the remix on TikTok.</p></div>
           </a>
-          <a class="post" href="tour.html">
+          <a class="post" href="tour.html" data-cta="See the tour page">
             <div class="ph"><img src="img/live-festival.jpg" alt="TGC playing an outdoor festival stage"></div>
             <div class="tx"><span class="tag live">Live</span><h3>Tour 2026</h3><p>Dates to be announced. Sign up below to hear first.</p></div>
           </a>
-          <a class="post" href="https://m.youtube.com/TGCMusic">
+          <a class="post" href="https://m.youtube.com/TGCMusic" data-cta="Watch on YouTube">
             <div class="ph"><img src="img/live-milla.jpg" alt="Milla Alice singing on stage in orange light"></div>
             <div class="tx"><span class="tag video">Video</span><h3>Echo, the lyric video</h3><p>Plus Bad Side, on YouTube.</p></div>
           </a>
@@ -190,6 +191,37 @@
   </div>
 </footer>
 
+<!-- NEWS POPUP: opens when a news card is clicked (Wix: Lightbox) -->
+<dialog class="post-dialog" id="postDialog" aria-labelledby="pdTitle">
+  <button class="pd-close" id="pdClose" aria-label="Close">&times;</button>
+  <img id="pdImg" src="" alt="">
+  <div class="pd-body">
+    <span class="tag" id="pdTag"></span>
+    <h3 id="pdTitle"></h3>
+    <p id="pdText"></p>
+    <div class="pd-actions"><a class="btn btn-primary" id="pdLink" href="#" target="_blank" rel="noopener"></a></div>
+  </div>
+</dialog>
+
+<script>
+/* News: click a card to open it in a popup, with a button through to the full post. */
+(function(){
+  const dlg=document.getElementById('postDialog'); if(!dlg||!dlg.showModal) return;
+  document.querySelectorAll('.news .post').forEach(p=>p.addEventListener('click',e=>{
+    e.preventDefault();
+    const img=p.querySelector('img'), tag=p.querySelector('.tag'), href=p.getAttribute('href');
+    document.getElementById('pdImg').src=img.src; document.getElementById('pdImg').alt=img.alt;
+    const t=document.getElementById('pdTag'); t.textContent=tag.textContent; t.className=tag.className;
+    document.getElementById('pdTitle').textContent=p.querySelector('h3').textContent;
+    document.getElementById('pdText').textContent=p.querySelector('p').textContent;
+    const a=document.getElementById('pdLink'); a.href=href; a.textContent=p.dataset.cta||'Open';
+    if(/^https?:/.test(href)){a.target='_blank'}else{a.removeAttribute('target')}
+    dlg.showModal();
+  }));
+  document.getElementById('pdClose').addEventListener('click',()=>dlg.close());
+  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+})();
+</script>
 <script>
 /* Hero: simple fade between the two photos (Wix: Slideshow autoplay). */
 (function(){

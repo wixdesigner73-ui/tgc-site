@@ -351,3 +351,40 @@ form .btn{width:100%;text-align:center;padding:19px}
 
 .price s{color:var(--muted);opacity:.7;margin-right:6px}
 .product .price{color:var(--fg)}
+
+/* ---------- mobile header store link ---------- */
+.store-m{display:none}
+@media (max-width:1020px){
+  .store-m{display:inline-flex;align-items:center;gap:8px;margin-left:auto;border:1px solid var(--line);color:var(--fg);padding:10px 14px;font:500 13px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
+  .store-m img{height:15px;width:auto}
+  .store-m:hover{border-color:var(--lime)}
+  .store-m + .menu-btn{margin-left:0}
+  #header .wrap{gap:10px}
+}
+
+/* ---------- news post popup ---------- */
+.post{cursor:pointer}
+.post-dialog{border:1px solid var(--line);background:var(--ink-2);color:var(--fg);padding:0;width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto}
+.post-dialog::backdrop{background:rgba(14,10,18,.8)}
+.post-dialog img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.post-dialog .pd-body{padding:24px 24px 28px;display:grid;gap:14px}
+.post-dialog h3{font:600 28px/1.15 var(--font)}
+.post-dialog p{color:var(--muted);font-size:17px}
+.post-dialog .pd-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.post-dialog .pd-close{position:absolute;top:10px;right:10px;width:40px;height:40px;border:0;background:rgba(14,10,18,.7);color:var(--fg);font-size:22px;cursor:pointer}
+
+/* ---------- mobile hero: photo on top, no overlaid text, small buttons ---------- */
+@media (max-width:640px){
+  #hero{height:auto;background:var(--ink)}
+  #hero::before{content:"";display:block;aspect-ratio:5/4}
+  .slide{bottom:auto;aspect-ratio:5/4;height:auto}
+  .slide.paint img{object-position:50% 35%}
+  .slide.duo img{object-position:35% 40%}
+  .hero-overlay{display:none}
+  .hero h1,.hero .who{display:none}
+  .hero-copy{position:static;padding:18px 0 26px}
+  .hero-copy .wrap{flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+  .cta-row{margin-top:0;gap:8px}
+  .cta-row .btn{padding:11px 14px;font-size:11px;letter-spacing:.14em}
+  .dots button{width:22px}
+}
