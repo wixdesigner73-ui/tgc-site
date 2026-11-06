@@ -354,6 +354,7 @@ form .btn{width:100%;text-align:center;padding:19px}
 
 /* ---------- mobile header store link ---------- */
 .store-m{display:none}
+.store-m img{height:15px;width:auto}
 @media (max-width:1020px){
   .store-m{display:inline-flex;align-items:center;gap:8px;margin-left:auto;border:1px solid var(--line);color:var(--fg);padding:10px 14px;font:500 13px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
   .store-m img{height:15px;width:auto}
